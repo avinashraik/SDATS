@@ -4,6 +4,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { RouterModule } from '@angular/router';
 import { FileUploadService } from './components/services/file-upload.service';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireModule } from '@angular/fire';
 
 
 
@@ -13,7 +15,7 @@ import { FileUploadService } from './components/services/file-upload.service';
   declarations: [HeaderComponent, SideBarComponent],
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule
 
   ],
   exports: [HeaderComponent, SideBarComponent]
