@@ -5,6 +5,7 @@ import { MasterService } from '../../service/master.service';
 import { NotificationServiceService } from 'src/app/core/services/notification-service.service';
 import { MatDialog } from '@angular/material';
 import { DeleteComponent } from 'src/app/shared/components/delete/delete.component';
+import { LoaderService } from 'src/app/shared/components/services/loader.service';
 
 @Component({
   selector: 'app-platform',
@@ -17,7 +18,8 @@ export class PlatformComponent implements OnInit {
   platform;
   platformList: any[] = [];
   constructor(private fb: FormBuilder, private masterService: MasterService,
-              private notification: NotificationServiceService, private dialog: MatDialog) { }
+              private notification: NotificationServiceService, private dialog: MatDialog,
+              private commonLoader: LoaderService) { }
 
   ngOnInit() {
     this.platformForm = this.fb.group({
@@ -31,6 +33,7 @@ export class PlatformComponent implements OnInit {
       this.notification.warning('Please fill required fields!');
       return;
     }
+    this.commonLoader.showLoader();
     const splittedArray = value.PlatFormName.split(',');
     splittedArray.forEach(element => {
       const model: PlatformModel = {
@@ -42,6 +45,7 @@ export class PlatformComponent implements OnInit {
     });
     this.platformForm.reset();
     this.getPlatformList();
+    this.commonLoader.hideLoader();
     this.notification.success('Added Successfully!');
   }
 
@@ -66,9 +70,11 @@ export class PlatformComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.data) {
+        this.commonLoader.showLoader();
         this.masterService.deletePlatform(Id).then(res => {
           this.getPlatformList();
           this.notification.success('Deleted Successfully!');
+          this.commonLoader.hideLoader();
         }).catch(e => {
           this.notification.error('Something went wrong!');
         });
@@ -76,7 +82,7 @@ export class PlatformComponent implements OnInit {
     });
   }
 
-  editEntry(Id) {
+  editEntry(Id, Name) {
 
   }
 }

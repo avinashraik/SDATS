@@ -14,6 +14,7 @@ import { AngularFireAuthGuardModule,} from '@angular/fire/auth-guard';
 import { environment } from 'src/environments/environment';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -29,9 +30,11 @@ import { CoreModule } from './core/core.module';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,
+    CoreModule,
+    MatProgressSpinnerModule,
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
-    AuthModule, 
+    AuthModule,
     CoreModule
 
 
