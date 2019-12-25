@@ -60,7 +60,7 @@
             <textarea mat-autosize matInput placeholder="Description" formControlName="description"></textarea>
           </mat-form-field>
           <b>Upload CV</b>
-          <input type="file" (change)="uploadCv()">
+          <input type="file" (change)="uploadCv($event)">
         </div>
 
       </mat-card-content>

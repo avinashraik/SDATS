@@ -92,7 +92,7 @@ export class AddCandidateComponent implements OnInit {
       this.candidate.status = '1'
 
       this.atsService.addCandidate(this.candidate).then(res => {
-        this.currentUpload.name = res.id
+      //  this.currentUpload.name = res.id
         this.ups.pushUpload(this.currentUpload)
         this.notification.success("Candidate Added");
 

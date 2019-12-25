@@ -1,0 +1,40 @@
+<div class="row" style="margin:15px 0px 20px 0px">
+
+    <div class="col-md-12">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Scheduled Interviews</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Candidate Name</th>
+                            <th scope="col">Interviewer name</th>
+                            <th scope="col">Scheduled Date</th>
+                            <th scope="col">Scheduled Time </th>
+                            <th scope="col">Status </th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let schedule of schedules; let i=index;">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{schedule.candName}}</td>
+                            <td>{{schedule.InterviewerName}}</td>
+                            <td>{{schedule.scheduleDate}}</td>
+                            <td>{{schedule.scheduleTime }}</td>
+                            <td></td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </mat-card-content>
+            <mat-card-actions>
+                <!-- REGISTER BUTTON -->
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

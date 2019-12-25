@@ -1,0 +1,35 @@
+<div mat-dialog-title>
+    <h4>Schedule Interview</h4>
+</div>
+<div class="row" style="margin:15px 0px 20px 0px">
+    <div class="col-md-12">
+        <form [formGroup]="scheduleForm" (ngSubmit)="scheduleInterview()">
+            <mat-dialog-content>
+                <div class="candidate-container">
+                    <mat-form-field>
+                        <mat-label>Select Interviewer</mat-label>
+                        <mat-select formControlName="interviewerId">
+                            <mat-option *ngFor="let item of interviewerList" [value]="item.Id">
+                                {{item.InterviewerName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label><b>Select Date</b></mat-label>
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="scheduleDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <br />
+
+                    <mat-label><b>Select Time</b></mat-label>
+                    <timepicker formControlName="scheduleTime"></timepicker>
+                </div>
+
+            </mat-dialog-content>
+            <mat-dialog-actions>
+                <button mat-raised-button color="primary">Schedule</button>
+            </mat-dialog-actions>
+        </form>
+    </div>
+</div>

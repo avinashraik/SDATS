@@ -1,5 +1,5 @@
 export interface Candidate {
-    id?:string;
+    id?: string;
     name?: string;
     exp?: number;
     platform?: string;
@@ -12,4 +12,13 @@ export interface Candidate {
     skills?: string[];
     status?: string;
     description?: string;
+}
+export interface schedule {
+    id?: string;
+    scheduleDate?: string;
+    scheduleTime?: string;
+    candidateId?: string;
+    interviewerId?: string;
+    candName?:string;
+    InterviewerName?:string;
 }

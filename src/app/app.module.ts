@@ -9,8 +9,9 @@ import { RouterModule } from '@angular/router';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireStorageModule} from '@angular/fire/storage';
-import { AngularFireAuthModule,} from '@angular/fire/auth';
-import { AngularFireAuthGuardModule,} from '@angular/fire/auth-guard';
+import { AngularFireAuthModule} from '@angular/fire/auth';
+import { AngularFireAuthGuardModule} from '@angular/fire/auth-guard';
+import { AngularFireFunctionsModule} from '@angular/fire/functions';
 import { environment } from 'src/environments/environment';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
@@ -34,6 +35,7 @@ import { MatProgressSpinnerModule } from '@angular/material';
     MatProgressSpinnerModule,
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
+    AngularFireFunctionsModule,
     AuthModule,
     CoreModule
 

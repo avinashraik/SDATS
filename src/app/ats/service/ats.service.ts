@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Candidate } from '../models/candidate';
+import { Candidate, schedule } from '../models/candidate';
 import { API_URL } from 'src/app/shared/constants/constant';
 
 @Injectable({
@@ -18,7 +18,12 @@ export class AtsService {
     return this.db.collection(API_URL.Application).snapshotChanges();
   }
   updateStatus(id, value) {
-   
     return this.db.collection(API_URL.Application).doc(id).set(value);
+  }
+  scheduleInterview(data: schedule) {
+    return this.db.collection(API_URL.Schedule).add(data);
+  }
+  getAllSchedules(){
+    return this.db.collection(API_URL.Schedule).snapshotChanges();
   }
 }
