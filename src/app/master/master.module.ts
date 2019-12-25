@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { MasterRoutingModule } from './master-routing.module';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
-import { MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatTabsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { InterviewersComponent } from './components/interviewers/interviewers.component';
 import { PlatformComponent } from './components/platform/platform.component';
+import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
@@ -16,7 +18,11 @@ import { PlatformComponent } from './components/platform/platform.component';
     MatTabsModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CoreModule
   ]
 })
 export class MasterModule { }

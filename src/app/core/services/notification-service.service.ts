@@ -12,4 +12,12 @@ export class NotificationServiceService {
   success(title?: string, message?: string) {
     this.toastr.success(message, title);
   }
+
+  warning(title?: string, message?: string) {
+    this.toastr.warning(message, title);
+  }
+
+  error(title?: string, message?: string) {
+    this.toastr.error(message, title);
+  }
 }

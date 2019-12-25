@@ -10,6 +10,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireStorageModule} from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -24,9 +25,10 @@ import { environment } from 'src/environments/environment';
     RouterModule.forRoot([]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireStorageModule
-    
-    
+    AngularFireStorageModule,
+    CoreModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]
