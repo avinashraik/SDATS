@@ -11,6 +11,7 @@ import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireStorageModule} from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 import { CoreModule } from './core/core.module';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CoreModule } from './core/core.module';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    CoreModule
+    CoreModule,
+    MatProgressSpinnerModule
 
 
   ],

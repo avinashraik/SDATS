@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PlatformModel } from '../Models/configuration-model';
+import { API_URL } from 'src/app/shared/constants/constant';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,14 @@ export class MasterService {
 
   addPlatform(data: PlatformModel) {
     // return this.db.collection('SDATS').doc('configuration').collection('platform').add(data);
-    return this.db.collection('SDATS/configuration/platform').add(data);
+    return this.db.collection(API_URL.Platform).add(data);
   }
 
   getPlatformList() {
-    return this.db.collection('SDATS').doc('configuration').collection('platform').get();
+    return this.db.collection(API_URL.Platform).get();
   }
 
   deletePlatform(id) {
-    return this.db.collection('SDATS/configuration/platform/').doc(id).delete();
+    return this.db.collection(API_URL.Platform).doc(id).delete();
   }
 }
