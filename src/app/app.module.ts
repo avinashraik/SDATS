@@ -6,6 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule} from '@angular/fire/firestore';
+import { AngularFireStorageModule} from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,12 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     SharedModule,
     AppRoutingModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
+    AngularFireModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
