@@ -20,7 +20,7 @@ export class ScheduleInterviewComponent implements OnInit {
   constructor(private fb: FormBuilder, private atsService: AtsService,
     private notification: NotificationServiceService, private masterService: MasterService,
     private emailService: EmailService,
-    public dialogRef: MatDialogRef<ScheduleInterviewComponent>,
+              public dialogRef: MatDialogRef<ScheduleInterviewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Candidate) { }
 
   ngOnInit() {

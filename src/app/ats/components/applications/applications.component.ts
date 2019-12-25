@@ -7,6 +7,7 @@ import { ApplicationStatus } from 'src/app/shared/constants/constant';
 import { NotificationServiceService } from 'src/app/core/services/notification-service.service';
 import { ScheduleInterviewComponent } from '../schedule-interview/schedule-interview.component';
 import { MasterService } from 'src/app/master/service/master.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-applications',
@@ -25,11 +26,19 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.candidates = [];
-    this.getPlatformList();
-    this.getAllCandidates();
+    forkJoin([this.getPlatformList()]).subscribe(res => {
+        this.platformList = [];
+        res[0].docs.forEach(elem => {
+          this.platform = {};
+          this.platform.Id = elem.id;
+          this.platform.PlatformName = elem.data().Name;
+          this.platformList.push(this.platform);
+        });
+        this.getAllCandidates();
+    });
   }
   getAllCandidates() {
-    this.atsService.getCandidates().subscribe(res => {
+    return this.atsService.getCandidates().subscribe(res => {
       this.candidates = res.map(x => {
         const id = x.payload.doc.id;
         const candidate = x.payload.doc.data() as Candidate;
@@ -75,19 +84,11 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
   }
 
   getPlatformList() {
-    this.masterService.getPlatformList().pipe().subscribe(res => {
-      this.platformList = [];
-      res.docs.forEach(elem => {
-        this.platform = {};
-        this.platform.Id = elem.id;
-        this.platform.PlatformName = elem.data().Name;
-        this.platformList.push(this.platform);
-      });
-    });
+    return this.masterService.getPlatformList();
   }
 
   ngOnDestroy(): void {
-  //  throw new Error("Method not implemented.");
+    //  throw new Error("Method not implemented.");
   }
 
 }

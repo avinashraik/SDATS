@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AtsService } from '../../service/ats.service';
 import { schedule, Candidate } from '../../models/candidate';
 import { MasterService } from 'src/app/master/service/master.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-all-schedules',
@@ -17,8 +18,18 @@ export class AllSchedulesComponent implements OnInit {
 
   ngOnInit() {
     this.getAllCandidates();
-    this.getAllInterviewers();
-    this.getAllSchedules();
+    forkJoin([this.getAllInterviewers()]).subscribe(res => {
+      this.interviewers = [];
+      res[0].docs.forEach(elem => {
+          const interviewer: any = {};
+          interviewer.Id = elem.id;
+          interviewer.InterviewerName = elem.data().Name;
+          interviewer.PlatformId = elem.data().PlatformId;
+          interviewer.Email = elem.data().Email;
+          this.interviewers.push(interviewer);
+        });
+      this.getAllSchedules();
+    }, err => console.log(err));
   }
 
   getAllSchedules() {
@@ -26,9 +37,9 @@ export class AllSchedulesComponent implements OnInit {
       this.schedules = res.map(x => {
         const id = x.payload.doc.id;
         const schedule = x.payload.doc.data() as schedule;
-        schedule.candName = this.candidates.find(x=>x.id == schedule.candidateId).name;
-        schedule.InterviewerName = this.interviewers.find(x=>x.Id == schedule.interviewerId).InterviewerName ;
-        // candidate.status = ApplicationStatus[Number(candidate.status)];
+        schedule.candName = this.candidates.find(y => y.id === schedule.candidateId).name;
+        schedule.InterviewerName = this.interviewers.find(y => y.Id === schedule.interviewerId).InterviewerName ;
+        // schedule.scheduleTime = schedule.scheduleTime;
         schedule.id = id;
         return { ...schedule }
       })
@@ -37,17 +48,7 @@ export class AllSchedulesComponent implements OnInit {
 
   getAllInterviewers() {
     let name = '';
-    this.masterservice.getInterviewerList().subscribe(res => {
-      this.interviewers = [];
-      res.docs.forEach(elem => {
-        const interviewer: any = {}
-        interviewer.Id = elem.id;
-        interviewer.InterviewerName = elem.data().Name;
-        interviewer.PlatformId = elem.data().PlatformId;
-        interviewer.Email = elem.data().Email;
-        this.interviewers.push(interviewer);
-      });
-    })
+    return this.masterservice.getInterviewerList();
   }
   getAllCandidates() {
     this.ats.getCandidates().subscribe(res => {
@@ -56,9 +57,9 @@ export class AllSchedulesComponent implements OnInit {
         const candidate = x.payload.doc.data() as Candidate;
         // candidate.status = ApplicationStatus[Number(candidate.status)];
         candidate.id = id;
-        return { ...candidate }
-      })
-    }, err => console.log(err))
+        return { ...candidate };
+      });
+    }, err => console.log(err));
   }
 
 }
