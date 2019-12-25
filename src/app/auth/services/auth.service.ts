@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { NotificationServiceService } from 'src/app/core/services/notification-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private auth : AngularFireAuth , private route:Router) { }
+  constructor(private auth : AngularFireAuth , private route:Router, private notification: NotificationServiceService) { }
 
   login(email,password) {
     this.auth.auth.signInWithEmailAndPassword(email, password).then(res => {
@@ -16,6 +17,8 @@ export class AuthService {
         this.route.navigate(['/']);
 
       })
+    }).catch(err=>{
+      this.notification.error("","Invalid Credentials")
     });
   }
   logout() {

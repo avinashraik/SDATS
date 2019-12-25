@@ -1,4 +1,73 @@
-<label>
-    <input type="file" (change)="detectFiles($event)">
- </label>
-<button (click)="logout()"></button>
+<div class="row" style="margin:15px 0px 20px 0px">
+  <div class="col-md-12">
+    <div mat-dialog-title>
+      <h3>Add New Candidate</h3>
+    </div>
+    <form [formGroup]="candidateForm" (ngSubmit)="addCandidate()">
+      <mat-card-content>
+
+        <div class="candidate-container">
+          <mat-form-field>
+            <input matInput placeholder="Candidate Name" formControlName="name">
+          </mat-form-field>
+          <mat-form-field>
+            <input type="number" matInput placeholder="Experience" formControlName="exp">
+            <span matSuffix>yrs</span>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Platform" formControlName="platform">
+          </mat-form-field>
+          <mat-radio-group aria-label="Gender" formControlName="gender">
+            <mat-radio-button value="male">Male</mat-radio-button>
+            <mat-radio-button value="female">Female</mat-radio-button>
+          </mat-radio-group>
+          <mat-form-field>
+            <input matInput placeholder="Contact Mode" formControlName="contactMode">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+          <mat-form-field>
+            <input type="number" matInput placeholder="Contact No." formControlName="contactNo">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Source" formControlName="source">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Recruiter" formControlName="recruiter">
+          </mat-form-field>
+
+          <mat-form-field class="candidate-container">
+            <mat-chip-list #chipList aria-label="Fruit selection">
+              <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable"
+                (removed)="remove(fruit)">
+                {{fruit}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
+                [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                {{fruit}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <!-- <input matInput placeholder="Skills" formControlName="skills"> -->
+
+          <mat-form-field>
+            <textarea mat-autosize matInput placeholder="Description" formControlName="description"></textarea>
+          </mat-form-field>
+          <b>Upload CV</b>
+          <input type="file" (change)="uploadCv()">
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [disabled]="candidateForm.invalid">Save</button>
+        <!-- REGISTER BUTTON -->
+      </mat-card-actions>
+    </form>
+  </div>
+</div>

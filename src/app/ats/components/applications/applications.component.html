@@ -1,0 +1,57 @@
+<div class="row" style="margin:15px 0px 20px 0px">
+    <div class="col-md-12">
+        <button mat-raised-button color="primary" (click)="addCandidate()">Add New Candidate</button>
+    </div>
+</div>
+<div class="row" style="margin:15px 0px 20px 0px">
+
+    <div class="col-md-12">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Candidates List</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Experience</th>
+                            <th scope="col">Platform</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cand of candidates; let i=index;">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{cand.name}}</td>
+                            <td>{{cand.exp}}</td>
+                            <td>{{cand.platform}}</td>
+                            <td>{{applicationStatus[+cand.status]}}</td>
+
+                            <td *ngIf="cand.status == applicationStatus.Open" class="button-margin">
+
+                                <button mat-raised-button color="primary" (click)="statusUpdate(cand.id, 2)">Interested
+                                    ?</button>
+                                <button mat-raised-button color="warn" (click)="statusUpdate(cand.id,3)">Not
+                                    Intersted ?</button>
+                            </td>
+
+                            <td *ngIf="cand.status == applicationStatus.Interested">
+
+                                <button mat-raised-button color="primary"
+                                    (click)="scheduleInterview(cand.id)">Schedule
+                                    Interview</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </mat-card-content>
+            <mat-card-actions>
+                <!-- REGISTER BUTTON -->
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

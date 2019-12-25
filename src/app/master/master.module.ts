@@ -12,11 +12,14 @@ import { SkillsComponent } from './components/skills/skills.component';
 import { ContactModeComponent } from './components/contact-mode/contact-mode.component';
 import { SourceComponent } from './components/source/source.component';
 import { RecruiterComponent } from './components/recruiter/recruiter.component';
+import { LandingComponent } from './components/landing/landing.component';
+import { SharedModule } from '../shared/shared.module';
+
 
 
 @NgModule({
-  declarations: [ConfigurationComponent, InterviewersComponent,
-    PlatformComponent, SkillsComponent, ContactModeComponent, SourceComponent,
+  declarations: [ConfigurationComponent, InterviewersComponent, PlatformComponent, LandingComponent,
+    SkillsComponent, ContactModeComponent, SourceComponent,
     RecruiterComponent],
   imports: [
     CommonModule,
@@ -29,7 +32,8 @@ import { RecruiterComponent } from './components/recruiter/recruiter.component';
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    MatSelectModule
+    MatSelectModule,
+    SharedModule
   ]
 })
 export class MasterModule { }

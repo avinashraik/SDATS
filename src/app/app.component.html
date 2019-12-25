@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <div class="overlay" id="loader" style="display: none;">
     <div class="center">
         <svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -32,37 +33,3 @@
         </svg>
     </div>
 </div>
-<!-- Page Wrapper -->
-<div id="wrapper" *ngIf="!isLoginUrl">
-
-  <app-side-bar></app-side-bar>
-
-  <!-- Content Wrapper -->
-  <div id="content-wrapper" class="d-flex flex-column">
-
-    <!-- Main Content -->
-    <div id="content">
-      <app-header></app-header>
-      <!-- Begin Page Content -->
-      <div class="container-fluid">
-        <router-outlet></router-outlet>
-      </div>
-      <!-- /.container-fluid -->
-    </div>
-    <!-- End of Main Content -->
-
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-      <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-          <span>Copyright &copy; smartData Enterprises 2019</span>
-        </div>
-      </div>
-    </footer>
-    <!-- End of Footer -->
-
-  </div>
-  <!-- End of Content Wrapper -->
-
-</div>
-<app-login *ngIf="isLoginUrl"></app-login>
