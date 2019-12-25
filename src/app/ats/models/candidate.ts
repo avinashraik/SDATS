@@ -1,5 +1,7 @@
+import { SkillModel } from '../components/add-candidate/add-candidate.component';
+
 export interface Candidate {
-    id?:string;
+    id?: string;
     name?: string;
     exp?: number;
     platform?: string;
@@ -12,4 +14,6 @@ export interface Candidate {
     skills?: string[];
     status?: string;
     description?: string;
+    CreatedDate?: Date;
+    CvUrl?: string;
 }

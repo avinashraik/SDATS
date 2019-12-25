@@ -1,11 +1,10 @@
+<div mat-dialog-title>
+  <h4>Add New Candidate</h4>
+</div>
 <div class="row" style="margin:15px 0px 20px 0px">
   <div class="col-md-12">
-    <div mat-dialog-title>
-      <h3>Add New Candidate</h3>
-    </div>
     <form [formGroup]="candidateForm" (ngSubmit)="addCandidate()">
-      <mat-card-content>
-
+      <mat-dialog-content>
         <div class="candidate-container">
           <mat-form-field>
             <input matInput placeholder="Candidate Name" formControlName="name">
@@ -14,15 +13,25 @@
             <input type="number" matInput placeholder="Experience" formControlName="exp">
             <span matSuffix>yrs</span>
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Platform" formControlName="platform">
+          <mat-form-field  class="width_100">
+            <mat-label>Platform</mat-label>
+            <mat-select formControlName="platform">
+              <mat-option *ngFor="let item of platformList" [value]="item.Id">
+                {{item.PlatformName}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
           <mat-radio-group aria-label="Gender" formControlName="gender">
             <mat-radio-button value="male">Male</mat-radio-button>
             <mat-radio-button value="female">Female</mat-radio-button>
           </mat-radio-group>
-          <mat-form-field>
-            <input matInput placeholder="Contact Mode" formControlName="contactMode">
+          <mat-form-field  class="width_100">
+            <mat-label>Contact Mode</mat-label>
+            <mat-select formControlName="contactMode">
+              <mat-option *ngFor="let item of contactModeList" [value]="item.Id">
+                {{item.ContactModeName}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Email" formControlName="email">
@@ -30,26 +39,36 @@
           <mat-form-field>
             <input type="number" matInput placeholder="Contact No." formControlName="contactNo">
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Source" formControlName="source">
+          <mat-form-field  class="width_100">
+            <mat-label>Source</mat-label>
+            <mat-select formControlName="source">
+              <mat-option *ngFor="let item of sourcesList" [value]="item.Id">
+                {{item.SourceName}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Recruiter" formControlName="recruiter">
-          </mat-form-field>
+          <mat-form-field  class="width_100">
+              <mat-label>Recruiter</mat-label>
+              <mat-select formControlName="recruiter">
+                <mat-option *ngFor="let item of recruiterList" [value]="item.Id">
+                  {{item.RecruiterName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
           <mat-form-field class="candidate-container">
             <mat-chip-list #chipList aria-label="Fruit selection">
-              <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable"
-                (removed)="remove(fruit)">
-                {{fruit}}
+              <mat-chip *ngFor="let skill of selectedSkills" [selectable]="selectable" [removable]="removable"
+                (removed)="remove(skill)">
+                {{skill}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
               </mat-chip>
-              <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
+              <input placeholder="Skill" #fruitInput [formControl]="skillCtrl" [matAutocomplete]="auto"
                 [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
             </mat-chip-list>
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-              <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+              <mat-option *ngFor="let fruit of filteredSkills | async" [value]="">
                 {{fruit}}
               </mat-option>
             </mat-autocomplete>
@@ -60,14 +79,14 @@
             <textarea mat-autosize matInput placeholder="Description" formControlName="description"></textarea>
           </mat-form-field>
           <b>Upload CV</b>
-          <input type="file" (change)="uploadCv()">
+          <input type="file" (change)="uploadCv($event)">
         </div>
 
-      </mat-card-content>
-      <mat-card-actions>
+      </mat-dialog-content>
+      <mat-dialog-actions>
         <button mat-raised-button color="primary" [disabled]="candidateForm.invalid">Save</button>
         <!-- REGISTER BUTTON -->
-      </mat-card-actions>
+      </mat-dialog-actions>
     </form>
   </div>
 </div>

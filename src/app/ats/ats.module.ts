@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AtsRoutingModule } from './ats-routing.module';
 import { AddCandidateComponent } from './components/add-candidate/add-candidate.component';
-import {MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatChipsModule, MatRadioModule, MatAutocompleteModule, MatIconModule} from '@angular/material';
+import {MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatChipsModule, MatRadioModule, MatAutocompleteModule, MatIconModule, MatSelectModule} from '@angular/material';
 import { LandingComponent } from './components/landing/landing.component'
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -26,7 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
+    MatSelectModule
   ],
   entryComponents:[AddCandidateComponent]
 })

@@ -11,6 +11,8 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from
 import { Candidate } from '../../models/candidate';
 import { AtsService } from '../../service/ats.service';
 import { NotificationServiceService } from 'src/app/core/services/notification-service.service';
+import { MasterService } from 'src/app/master/service/master.service';
+import { LoaderService } from 'src/app/shared/components/services/loader.service';
 
 @Component({
   selector: 'app-add-candidate',
@@ -27,25 +29,42 @@ export class AddCandidateComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
+  skillCtrl = new FormControl();
+  filteredSkills: Observable<string[]>;
   fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  selectedSkills: string[] = [];
+  allFruits: string[] = [];
   candidate: Candidate = {};
-
+  platform;
+  platformList: any[] = [];
+  source;
+  sourcesList: any[] = [];
+  recruiter;
+  recruiterList: any[] = [];
+  contactMode;
+  contactModeList: any[] = [];
+  // skill: SkillModel = {};
+  skillsList: string[] = [];
   @ViewChild('fruitInput', { static: false }) fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
 
   constructor(private ups: FileUploadService, private authservice: AuthService,
-    private fb: FormBuilder, private atsService: AtsService, private notification: NotificationServiceService) {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+              private fb: FormBuilder, private atsService: AtsService,
+              private notification: NotificationServiceService, private masterService: MasterService,
+              private commonLoader: LoaderService) {
+    this.filteredSkills = this.skillCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+      map((skill: string | null) => skill ? this._filter(skill) : this.skillsList.slice()));
 
   }
 
   ngOnInit() {
+    this.getPlatformList();
+    this.getRecruiterList();
+    this.getSourcesList();
+    this.getContactModeList();
+    this.getSkillsList();
     this.createForm();
   }
   createForm() {
@@ -70,11 +89,20 @@ export class AddCandidateComponent implements OnInit {
   }
   uploadCv(event) {
     this.selectedFiles = event.target.files;
-    let file = this.selectedFiles.item(0)
+    let file = this.selectedFiles.item(0);
     this.currentUpload = new Upload(file);
     // this.ups.pushUpload(this.currentUpload)
   }
   addCandidate() {
+    if (this.selectedSkills.length === 0) {
+      this.notification.warning('Please select at least one Skill!');
+      return;
+    }
+    if (this.currentUpload == null) {
+      this.notification.warning('Please upload CV!');
+      return;
+    }
+    this.commonLoader.showLoader();
     if (this.candidateForm.valid) {
       this.candidate = {};
       this.candidate.contactMode = this.candidateForm.controls.contactMode.value;
@@ -87,19 +115,26 @@ export class AddCandidateComponent implements OnInit {
       this.candidate.name = this.candidateForm.controls.name.value;
       this.candidate.platform = this.candidateForm.controls.platform.value;
       this.candidate.recruiter = this.candidateForm.controls.recruiter.value;
-      this.candidate.skills = this.fruits;
+      this.candidate.skills = this.selectedSkills;
       this.candidate.source = this.candidateForm.controls.source.value;
-      this.candidate.status = '1'
+      this.candidate.status = '1';
+      this.candidate.CreatedDate = new Date();
 
       this.atsService.addCandidate(this.candidate).then(res => {
-        this.currentUpload.name = res.id
-        this.ups.pushUpload(this.currentUpload)
-        this.notification.success("Candidate Added");
+        this.currentUpload.name = res.id;
+        const url = this.ups.pushUpload(this.currentUpload);
+        this.candidate.CvUrl = url;
+        this.atsService.editCandidate(res.id, this.candidate).then(r => {
+          this.commonLoader.hideLoader();
+          this.selectedFiles.item = null;
+        });
+        this.candidateForm.reset();
+        this.notification.success('Candidate Added!');
 
       })
       // this.currentUpload.name = "Test";
-      this.ups.pushUpload(this.currentUpload)
-      console.log(this.candidate);
+      // this.ups.pushUpload(this.currentUpload)
+      // console.log(this.candidate);
     }
   }
   // Mat Chips integration
@@ -113,7 +148,7 @@ export class AddCandidateComponent implements OnInit {
 
       // Add our fruit
       if ((value || '').trim()) {
-        this.fruits.push(value.trim());
+        this.selectedSkills.push(value.trim());
       }
 
       // Reset the input value
@@ -121,24 +156,89 @@ export class AddCandidateComponent implements OnInit {
         input.value = '';
       }
 
-      this.fruitCtrl.setValue(null);
+      this.skillCtrl.setValue(null);
     }
   }
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+  remove(skill: string): void {
+    const index = this.selectedSkills.indexOf(skill);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.selectedSkills.splice(index, 1);
     }
   }
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
+    this.selectedSkills.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+    this.skillCtrl.setValue(null);
   }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.skillsList.filter(skill => skill.toLowerCase().indexOf(filterValue) === 0);
   }
+
+  getPlatformList() {
+    this.masterService.getPlatformList().pipe().subscribe(res => {
+      this.platformList = [];
+      res.docs.forEach(elem => {
+        this.platform = {};
+        this.platform.Id = elem.id;
+        this.platform.PlatformName = elem.data().Name;
+        this.platformList.push(this.platform);
+      });
+    });
+  }
+
+  getRecruiterList() {
+    this.masterService.getRecruiterList().pipe().subscribe(res => {
+      this.recruiterList = [];
+      res.docs.forEach(elem => {
+        this.recruiter = {};
+        this.recruiter.Id = elem.id;
+        this.recruiter.RecruiterName = elem.data().Name;
+        this.recruiterList.push(this.recruiter);
+      });
+    });
+  }
+
+  getContactModeList() {
+    this.masterService.getContactModeList().pipe().subscribe(res => {
+      this.contactModeList = [];
+      res.docs.forEach(elem => {
+        this.contactMode = {};
+        this.contactMode.Id = elem.id;
+        this.contactMode.ContactModeName = elem.data().Name;
+        this.contactModeList.push(this.contactMode);
+      });
+    });
+  }
+
+  getSourcesList() {
+    this.masterService.getSourcesList().pipe().subscribe(res => {
+      this.sourcesList = [];
+      res.docs.forEach(elem => {
+        this.source = {};
+        this.source.Id = elem.id;
+        this.source.SourceName = elem.data().Name;
+        this.sourcesList.push(this.source);
+      });
+    });
+  }
+
+  getSkillsList() {
+    this.masterService.getSkillsList().pipe().subscribe(res => {
+      this.skillsList = [];
+      res.docs.forEach(elem => {
+        // this.skill = {};
+        // this.skill.SkillId = elem.id;
+        // this.skill.SkillName = elem.data().Name;
+        this.skillsList.push(elem.data().Name);
+      });
+    });
+  }
+}
+
+export class SkillModel {
+  SkillId?;
+  SkillName?;
 }

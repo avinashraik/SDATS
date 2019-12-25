@@ -14,11 +14,17 @@ export class AtsService {
     // return this.db.collection('SDATS').doc('configuration').collection('platform').add(data);
     return this.db.collection(API_URL.Application).add(data);
   }
+
+  editCandidate(id, data: Candidate) {
+    // return this.db.collection('SDATS').doc('configuration').collection('platform').add(data);
+    return this.db.collection(API_URL.Application).doc(id).set(data);
+  }
+
   getCandidates() {
     return this.db.collection(API_URL.Application).snapshotChanges();
   }
   updateStatus(id, value) {
-   
+
     return this.db.collection(API_URL.Application).doc(id).set(value);
   }
 }

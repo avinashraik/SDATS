@@ -37,7 +37,7 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
     const dg = this.dialog.open(AddCandidateComponent,
       {
         width: '500px',
-        height: '500px'
+        // height: '500px'
       }
     ).afterClosed().subscribe(res => {
       console.log(res);
