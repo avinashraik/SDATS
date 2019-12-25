@@ -2,13 +2,13 @@
     <div class="col-md-5">
       <mat-card>
         <mat-card-header>
-            <mat-card-title>Add Platform/Technologies</mat-card-title>
+            <mat-card-title>Add Recruiter</mat-card-title>
         </mat-card-header>
         <span style="color: gray;">You can also add murtiple comma separtated entries.*</span>
         <mat-card-content>
-          <form [formGroup]="platformForm" (ngSubmit)="addPlatform(platformForm.value)">
+          <form [formGroup]="recruiterForm" (ngSubmit)="addRecruiter(recruiterForm.value)">
             <mat-form-field>
-                <input matInput placeholder="Platform Name(s)" formControlName="PlatFormName">
+                <input matInput placeholder="Recruiter(s) Name" formControlName="RecruiterName">
                 <input type="text" id="Id" value="" style="display: none;">
             </mat-form-field>
             <button #submitbtn style="display: none;" type="submit"></button>
@@ -23,30 +23,27 @@
     <div class="col-md-7">
       <mat-card>
         <mat-card-header>
-            <mat-card-title>Platforms List</mat-card-title>
+            <mat-card-title>Recruiter List</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                      <th>Platform Name</th>
+                      <th>Recruiter Name</th>
                       <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                  <tr  *ngFor="let item of platformList">
-                      <td class="color_black">{{item.PlatformName}}</td>
+                  <tr  *ngFor="let item of recruiterList">
+                      <td class="color_black">{{item.RecruiterName}}</td>
                       <td>
-                        <i (click)="editEntry(item.Id, item.PlatformName)" class="fa fa-edit fa-4 icon-align"></i>
+                        <i (click)="editEntry(item.Id, item.RecruiterName)" class="fa fa-edit fa-4 icon-align"></i>
                         <i (click)="deleteEntry(item.Id)" class="fa fa-trash fa-4 icon-align"></i>
                       </td>
                   </tr>
                 </tbody>
               </table>
         </mat-card-content>
-        <mat-card-actions>
-          <!-- REGISTER BUTTON -->
-        </mat-card-actions>
       </mat-card>
     </div>
   </div>

@@ -1,84 +1,83 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommonMasterModel } from '../../Models/configuration-model';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MasterService } from '../../service/master.service';
 import { NotificationServiceService } from 'src/app/core/services/notification-service.service';
 import { MatDialog } from '@angular/material';
-import { DeleteComponent } from 'src/app/shared/components/delete/delete.component';
 import { LoaderService } from 'src/app/shared/components/services/loader.service';
+import { DeleteComponent } from 'src/app/shared/components/delete/delete.component';
+import { CommonMasterModel } from '../../Models/configuration-model';
 
 @Component({
-  selector: 'app-platform',
-  templateUrl: './platform.component.html',
-  styleUrls: ['./platform.component.scss']
+  selector: 'app-recruiter',
+  templateUrl: './recruiter.component.html',
+  styleUrls: ['./recruiter.component.scss']
 })
-export class PlatformComponent implements OnInit {
-
+export class RecruiterComponent implements OnInit {
   isEdit = false;
-  platformForm: FormGroup;
-  platform;
-  platformList: any[] = [];
+  recruiterForm: FormGroup;
+  recruiter;
+  recruiterList: any[] = [];
   constructor(private fb: FormBuilder, private masterService: MasterService,
               private notification: NotificationServiceService, private dialog: MatDialog,
               private commonLoader: LoaderService) { }
 
   ngOnInit() {
-    this.platformForm = this.fb.group({
-      PlatFormName: ['', Validators.required]
+    this.recruiterForm = this.fb.group({
+      RecruiterName: ['', Validators.required]
     });
-    this.getPlatformList();
+    this.getRecruiterList();
   }
 
-  addPlatform(value) {
-    if (!this.platformForm.valid) {
+  addRecruiter(value) {
+    if (!this.recruiterForm.valid) {
       this.notification.warning('Please fill required fields!');
       return;
     }
     this.commonLoader.showLoader();
     if (!this.isEdit) {
-      const splittedArray = value.PlatFormName.split(',');
+      const splittedArray = value.RecruiterName.split(',');
       splittedArray.forEach(element => {
       const model: CommonMasterModel = {
         Name: element
       };
-      this.masterService.addPlatform(model).then(res => {
+      this.masterService.addRecruiter(model).then(res => {
         // this.notification.success('Added Successfully!');
       }).catch();
     });
-      this.platformForm.reset();
-      this.getPlatformList();
+      this.recruiterForm.reset();
+      this.getRecruiterList();
       this.commonLoader.hideLoader();
       this.notification.success('Added Successfully!');
     } else {
-      const splittedArray = value.PlatFormName.split(',');
+      const splittedArray = value.RecruiterName.split(',');
       if (splittedArray.length !== 1) {
         this.notification.warning('Value cannot contain comma in Edit Mode!');
         this.commonLoader.hideLoader();
         return;
       }
-      this.masterService.editPlatform(document.getElementById('Id').innerText, splittedArray[0]).then(res => {
+      this.masterService.editRecruiter(document.getElementById('Id').innerText, splittedArray[0]).then(res => {
          this.notification.success('Updated Successfully!');
          this.isEdit = false;
-         this.platformForm.reset();
+         this.recruiterForm.reset();
          this.commonLoader.hideLoader();
-         this.getPlatformList();
+         this.getRecruiterList();
       }).catch(res => {
         this.notification.error('Something went wrong!');
         this.isEdit = false;
-        this.platformForm.reset();
+        this.recruiterForm.reset();
         this.commonLoader.hideLoader();
       });
     }
   }
 
-  getPlatformList() {
-    this.masterService.getPlatformList().pipe().subscribe(res => {
-      this.platformList = [];
+  getRecruiterList() {
+    this.masterService.getRecruiterList().pipe().subscribe(res => {
+      this.recruiterList = [];
       res.docs.forEach(elem => {
-        this.platform = {};
-        this.platform.Id = elem.id;
-        this.platform.PlatformName = elem.data().Name;
-        this.platformList.push(this.platform);
+        this.recruiter = {};
+        this.recruiter.Id = elem.id;
+        this.recruiter.RecruiterName = elem.data().Name;
+        this.recruiterList.push(this.recruiter);
       });
     });
   }
@@ -93,8 +92,8 @@ export class PlatformComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.data) {
         this.commonLoader.showLoader();
-        this.masterService.deletePlatform(Id).then(res => {
-          this.getPlatformList();
+        this.masterService.deleteRecruiter(Id).then(res => {
+          this.getRecruiterList();
           this.notification.success('Deleted Successfully!');
           this.commonLoader.hideLoader();
         }).catch(e => {
@@ -105,15 +104,13 @@ export class PlatformComponent implements OnInit {
   }
 
   clearForm() {
-    this.platformForm.reset();
+    this.recruiterForm.reset();
     this.isEdit = false;
   }
 
-  editEntry(Id, platformName) {
-    this.platformForm.controls['PlatFormName'].setValue(platformName);
+  editEntry(Id, recruiterName) {
+    this.recruiterForm.controls['RecruiterName'].setValue(recruiterName);
     this.isEdit = true;
     document.getElementById('Id').innerHTML = Id;
   }
 }
-
-
