@@ -1,56 +1,73 @@
-  <!-- Sidebar -->
-  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html" style="background: white;">
-      <div class="sidebar-brand-icon">
-        <img src="../../../../assets/img/ats-logo.png" alt="logo" style="width:22%;">
-        <h5 style="color: gray;font-weight: 600;display:inline;">SDATS</h5>
-      </div>
-    </a>
-    <!-- <img src="../../../../assets/img/ats-logo.png" alt="logo" style="height: 20%; margin-left: 20px;"> -->
-    <!-- <h3 style="font-weight: 800;">SDATS</h3> -->
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-      <a class="nav-link">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-      Master Pages
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html"
+    style="background: white;">
+    <div class="sidebar-brand-icon">
+      <img src="../../../../assets/img/ats-logo.png" alt="logo" style="width:22%;">
+      <h5 style="color: gray;font-weight: 600;display:inline;">SDATS</h5>
     </div>
+  </a>
+  <!-- <img src="../../../../assets/img/ats-logo.png" alt="logo" style="height: 20%; margin-left: 20px;"> -->
+  <!-- <h3 style="font-weight: 800;">SDATS</h3> -->
 
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-      <a class="nav-link" >
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>Add New Record</span></a>
-    </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-      <a class="nav-link" >
-        <i class="fas fa-fw fa-table"></i>
-        <span>Report</span></a>
-    </li>
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item active">
+    <a class="nav-link" [routerLink]="['/']">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a>
+  </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    ATS
+  </div>
 
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-      <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+  <!-- Nav Item - Charts -->
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/ats/applications']">
+      <i class="fas fa-fw fa-chart-area"></i>
+      <span>Candidates</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/ats/schedules']">
+      <i class="fas fa-fw fa-chart-area"></i>
+      <span>Schedules</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link">
+      <i class="fas fa-fw fa-chart-area"></i>
+      <span>Feedbacks</span></a>
+  </li>
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    Configuration
+  </div>
 
-  </ul>
-  <!-- End of Sidebar -->
+  <!-- Nav Item - Charts -->
+  <li class="nav-item">
+    <a class="nav-link" [routerLink]="['/master/configuration']">
+      <i class="fas fa-fw fa-chart-area"></i>
+      <span>Configurations</span></a>
+  </li>
+
+
+
+  <!-- Divider -->
+  <hr class="sidebar-divider d-none d-md-block">
+
+  <!-- Sidebar Toggler (Sidebar) -->
+  <!-- <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div> -->
+
+</ul>
+<!-- End of Sidebar -->

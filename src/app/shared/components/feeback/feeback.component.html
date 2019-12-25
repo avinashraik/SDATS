@@ -1,0 +1,23 @@
+<mat-card class="example-card">
+    <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
+        <mat-card-header>
+            <mat-card-title>Feedback form</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="feedback-container">
+                <mat-radio-group aria-label="Is Recommended" formControlName="status">
+                    <mat-radio-button value="7">Recommended</mat-radio-button>
+                    <mat-radio-button value="8">Not Recommended</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field>
+                    <textarea formControlName="feedback" rows="10" mat-autosize matInput placeholder="Feedback"></textarea>
+                </mat-form-field>
+
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="feedbackForm.invalid">Submit</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

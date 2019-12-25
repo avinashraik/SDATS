@@ -4,18 +4,21 @@ import { NotificationServiceService } from 'src/app/core/services/notification-s
 import { Candidate, schedule } from 'src/app/ats/models/candidate';
 import { HttpClient } from '@angular/common/http';
 import { EmailBody } from '../../models/email';
+import { Feedback } from '../../models/feedback';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { API_URL } from '../../constants/constant';
 @Injectable({
   providedIn: 'root'
 })
 export class EmailService {
 
   constructor(private fn: AngularFireFunctions, private notification: NotificationServiceService
-    , private http: HttpClient) { }
-  sendScheduleMail(candidatedetail: Candidate, interviewerDetail, sch:schedule) {
+    , private http: HttpClient, private db: AngularFirestore) { }
+  sendScheduleMail(candidatedetail: Candidate, interviewerDetail, sch: schedule) {
 
     let email: EmailBody = {};
     email.subject = "Interview Scheduled";
-    email.content=`<p>Hello <b>${interviewerDetail.InterviewerName}</b><br/>
+    email.content = `<p>Hello <b>${interviewerDetail.InterviewerName}</b><br/>
      <b> Candidate Name: </b> ${candidatedetail.name} <br/>
      <b> Experience: </b> ${candidatedetail.exp}  <br/>
      <b> Date: </b> ${sch.scheduleDate}  <br/>
@@ -28,5 +31,9 @@ export class EmailService {
     // const mail = this.fn.functions.httpsCallable('sendMail?dest=' + intervieweremail);
     // mail().then().catch(err => {
     // });
+  }
+
+  sendFeedback(data: Feedback) {
+    return this.db.collection(API_URL.Feedback).add(data)
   }
 }

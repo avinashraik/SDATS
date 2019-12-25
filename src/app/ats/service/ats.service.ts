@@ -32,4 +32,7 @@ export class AtsService {
   getAllSchedules(){
     return this.db.collection(API_URL.Schedule).snapshotChanges();
   }
+  getSchedule(id){
+    return this.db.collection(API_URL.Schedule).doc(id).get();
+  }
 }

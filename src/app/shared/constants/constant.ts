@@ -6,7 +6,8 @@ export const API_URL = {
   Source: 'SDATS/configuration/source',
   Recruiter: 'SDATS/configuration/recruiter',
   Application: 'SDATS/application/candidates',
-  Schedule: 'SDATS/application/interviewschedules'
+  Schedule: 'SDATS/application/interviewschedules',
+  Feedback: 'SDATS/application/feedbacks',
 };
 
 export enum ApplicationStatus {
