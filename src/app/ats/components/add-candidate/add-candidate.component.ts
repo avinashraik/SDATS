@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators'
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { Candidate } from '../../models/candidate';
+import { AtsService } from '../../service/ats.service';
+import { NotificationServiceService } from 'src/app/core/services/notification-service.service';
 
 @Component({
   selector: 'app-add-candidate',
@@ -35,7 +37,8 @@ export class AddCandidateComponent implements OnInit {
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
 
-  constructor(private ups: FileUploadService, private authservice: AuthService, private fb: FormBuilder) {
+  constructor(private ups: FileUploadService, private authservice: AuthService,
+    private fb: FormBuilder, private atsService: AtsService, private notification: NotificationServiceService) {
     this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
       map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
@@ -56,8 +59,8 @@ export class AddCandidateComponent implements OnInit {
       contactNo: ['', Validators.required],
       source: ['', Validators.required],
       recruiter: ['', Validators.required],
-     // skills: [''],
-      status: ['Open', Validators.required],
+      // skills: [''],
+      status: ['1', Validators.required],
       description: [''],
     });
     this.candidateForm.valueChanges.subscribe(console.log);
@@ -73,24 +76,30 @@ export class AddCandidateComponent implements OnInit {
   }
   addCandidate() {
     if (this.candidateForm.valid) {
-       this.candidate.contactMode = this.candidateForm.controls.contactMode.value;
-       this.candidate.contactNo   = this.candidateForm.controls.contactNo.value;
-       this.candidate.description = this.candidateForm.controls.description.value;
-       this.candidate.email = this.candidateForm.controls.email.value;
-       this.candidate.exp = this.candidateForm.controls.exp.value;
-       this.candidate.gender = this.candidateForm.controls.gender.value;
+      this.candidate = {};
+      this.candidate.contactMode = this.candidateForm.controls.contactMode.value;
+      this.candidate.contactNo = this.candidateForm.controls.contactNo.value;
+      this.candidate.description = this.candidateForm.controls.description.value;
+      this.candidate.email = this.candidateForm.controls.email.value;
+      this.candidate.exp = this.candidateForm.controls.exp.value;
+      this.candidate.gender = this.candidateForm.controls.gender.value;
 
-       this.candidate.name = this.candidateForm.controls.name.value;
-       this.candidate.platform   = this.candidateForm.controls.platform.value;
-       this.candidate.recruiter = this.candidateForm.controls.recruiter.value;
-       this.candidate.skills = this.fruits;
-       this.candidate.source = this.candidateForm.controls.source.value;
-       this.candidate.status = 'Open'
+      this.candidate.name = this.candidateForm.controls.name.value;
+      this.candidate.platform = this.candidateForm.controls.platform.value;
+      this.candidate.recruiter = this.candidateForm.controls.recruiter.value;
+      this.candidate.skills = this.fruits;
+      this.candidate.source = this.candidateForm.controls.source.value;
+      this.candidate.status = '1'
 
+      this.atsService.addCandidate(this.candidate).then(res => {
+        this.currentUpload.name = res.id
+        this.ups.pushUpload(this.currentUpload)
+        this.notification.success("Candidate Added");
 
+      })
       // this.currentUpload.name = "Test";
-       this.ups.pushUpload(this.currentUpload)
-       console.log(this.candidate);
+      this.ups.pushUpload(this.currentUpload)
+      console.log(this.candidate);
     }
   }
   // Mat Chips integration
