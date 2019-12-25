@@ -17,3 +17,12 @@ export interface Candidate {
     CreatedDate?: Date;
     CvUrl?: string;
 }
+export interface schedule {
+    id?: string;
+    scheduleDate?: string;
+    scheduleTime?: string;
+    candidateId?: string;
+    interviewerId?: string;
+    candName?:string;
+    InterviewerName?:string;
+}

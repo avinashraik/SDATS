@@ -1,0 +1,8 @@
+.candidate-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .candidate-container > * {
+    width: 100%;
+  }

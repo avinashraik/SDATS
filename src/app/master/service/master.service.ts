@@ -38,6 +38,9 @@ export class MasterService {
   getInterviewerList() {
     return this.db.collection(API_URL.Interviewer).get();
   }
+  getInterviewerById(id) {
+    return this.db.collection(API_URL.Interviewer).doc(id).ref.get();
+  }
 
   editInterviewer(id, name, email, platformId) {
     const value = {

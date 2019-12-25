@@ -8,6 +8,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire';
 import { DeleteComponent } from './components/delete/delete.component';
 import { MatDialogModule, MatButtonModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -19,7 +20,8 @@ import { MatDialogModule, MatButtonModule } from '@angular/material';
     CommonModule,
     RouterModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
 
   ],
   exports: [HeaderComponent, SideBarComponent],

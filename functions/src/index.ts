@@ -9,7 +9,7 @@ let transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp.gmail.com',
     port: 465,
-    secure: true, 
+    secure: true,
     auth: {
         user: 'sdd.shared@gmail.com',
         pass: 'sdei#2002'
@@ -28,23 +28,27 @@ export const sendMail = functions.https.onRequest((req, res) => {
 
         // getting dest email by query string
         const dest = req.query.dest;
-
+        const body = req.body;
+        console.log(body);
         const mailOptions = {
-            from: 'Your Account Name <sdd.shared@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
+            from: 'SD_ATS <sdd.shared@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
             to: dest,
-            subject: 'I\'M A PICKLE!!!', // email subject
-            html: `<p style="font-size: 16px;">Pickle Riiiiiiiiiiiiiiiick!!</p>
-                <br />
-                <img src="https://images.prod.meredith.com/product/fc8754735c8a9b4aebb786278e7265a5/1538025388228/l/rick-and-morty-pickle-rick-sticker" />
-            ` // email content in HTML
+            // subject: 'I\'M A PICKLE!!!', // email subject
+            // html: `<p style="font-size: 16px;">Pickle Riiiiiiiiiiiiiiiick!!</p>
+            //     <br />
+            //     <img src="https://images.prod.meredith.com/product/fc8754735c8a9b4aebb786278e7265a5/1538025388228/l/rick-and-morty-pickle-rick-sticker" />
+            // ` // email content in HTML
+            subject: body.subject, // email subject
+            html: body.content
+
         };
 
         // returning result
         transporter.sendMail(mailOptions, (erro, info) => {
             if (erro) {
-                res.send(erro.toString());
+                res.send({ status: erro.toString() });
             }
-            res.send('Sended');
+            res.send({ status: 'sened' });
         });
     });
 });

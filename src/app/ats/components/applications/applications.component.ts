@@ -5,6 +5,7 @@ import { AtsService } from '../../service/ats.service';
 import { Candidate } from '../../models/candidate';
 import { ApplicationStatus } from 'src/app/shared/constants/constant';
 import { NotificationServiceService } from 'src/app/core/services/notification-service.service';
+import { ScheduleInterviewComponent } from '../schedule-interview/schedule-interview.component';
 
 @Component({
   selector: 'app-applications',
@@ -45,7 +46,7 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
 
   }
   statusUpdate(id, status) {
-    const candidate = this.candidates.find(x=>x.id == id);
+    const candidate = this.candidates.find(x => x.id == id);
     candidate.status = String(status);
     this.atsService.updateStatus(id, candidate).then(res => {
       this.notification.success('Status updated');
@@ -54,7 +55,16 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
     })
   }
 
-  scheduleInterview() {
+  scheduleInterview(id) {
+    const candidate = this.candidates.find(x => x.id == id);
+    const dg = this.dialog.open(ScheduleInterviewComponent,
+      {
+        width: '500px',
+        data: candidate
+      }
+    ).afterClosed().subscribe(res => {
+  
+    })
 
   }
 
