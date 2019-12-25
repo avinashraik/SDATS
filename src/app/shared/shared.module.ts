@@ -7,7 +7,7 @@ import { FileUploadService } from './components/services/file-upload.service';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire';
 import { DeleteComponent } from './components/delete/delete.component';
-import { MatDialogModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule } from '@angular/material';
+import { MatDialogModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule, MatBadgeModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { FeebackComponent } from './components/feeback/feeback.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,7 +28,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatRadioModule,
     ReactiveFormsModule,
-    HttpClientModule
+    MatBadgeModule,
+    HttpClientModule,
 
   ],
   exports: [HeaderComponent, SideBarComponent, FeebackComponent],
