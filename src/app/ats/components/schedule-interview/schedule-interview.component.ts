@@ -58,7 +58,7 @@ export class ScheduleInterviewComponent implements OnInit {
     this.atsService.scheduleInterview(this.schedule).then(res => {
       this.emailService.sendScheduleMail(this.data, this.interviewer, this.schedule);
       this.statusUpdate(this.data.id);
-      this.notification.success('Interview scheduled for' + this.data.name);
+      this.notification.success('Interview scheduled for ' + this.data.name);
       this.dialogRef.close();
     });
   }

@@ -28,7 +28,7 @@
 
             </mat-dialog-content>
             <mat-dialog-actions>
-                <button mat-raised-button color="primary">Schedule</button>
+                <button mat-raised-button color="primary" [disabled]="scheduleForm.invalid">Schedule</button>
             </mat-dialog-actions>
         </form>
     </div>

@@ -6,6 +6,7 @@ import { Candidate } from '../../models/candidate';
 import { ApplicationStatus } from 'src/app/shared/constants/constant';
 import { NotificationServiceService } from 'src/app/core/services/notification-service.service';
 import { ScheduleInterviewComponent } from '../schedule-interview/schedule-interview.component';
+import { MasterService } from 'src/app/master/service/master.service';
 
 @Component({
   selector: 'app-applications',
@@ -16,11 +17,15 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
 
   candidates: Candidate[] = [];
   candidate: Candidate = {};
+  platformList: any[] = [];
+  platform;
   get applicationStatus() { return ApplicationStatus; }
-  constructor(private dialog: MatDialog, private atsService: AtsService, private notification: NotificationServiceService) { }
+  constructor(private dialog: MatDialog, private atsService: AtsService,
+              private notification: NotificationServiceService, private masterService: MasterService) { }
 
   ngOnInit() {
     this.candidates = [];
+    this.getPlatformList();
     this.getAllCandidates();
   }
   getAllCandidates() {
@@ -28,6 +33,7 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
       this.candidates = res.map(x => {
         const id = x.payload.doc.id;
         const candidate = x.payload.doc.data() as Candidate;
+        candidate.platform = this.platformList.filter(e => e.Id === candidate.platform)[0].PlatformName;
         // candidate.status = ApplicationStatus[Number(candidate.status)];
         candidate.id = id;
         return { ...candidate }
@@ -63,9 +69,21 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
         data: candidate
       }
     ).afterClosed().subscribe(res => {
-  
+
     })
 
+  }
+
+  getPlatformList() {
+    this.masterService.getPlatformList().pipe().subscribe(res => {
+      this.platformList = [];
+      res.docs.forEach(elem => {
+        this.platform = {};
+        this.platform.Id = elem.id;
+        this.platform.PlatformName = elem.data().Name;
+        this.platformList.push(this.platform);
+      });
+    });
   }
 
   ngOnDestroy(): void {

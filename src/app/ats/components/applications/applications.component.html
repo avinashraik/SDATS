@@ -33,9 +33,9 @@
                             <td *ngIf="cand.status == applicationStatus.Open" class="button-margin">
 
                                 <button mat-raised-button color="primary" (click)="statusUpdate(cand.id, 2)">Interested
-                                    ?</button>
+                                    <i class="fa fa-check fa-2" aria-hidden="true"></i></button>
                                 <button mat-raised-button color="warn" (click)="statusUpdate(cand.id,3)">Not
-                                    Intersted ?</button>
+                                    Intersted <i class="fa fa-times fa-2" aria-hidden="true"></i></button>
                             </td>
 
                             <td *ngIf="cand.status == applicationStatus.Interested">
