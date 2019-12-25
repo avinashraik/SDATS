@@ -14,7 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ScheduleInterviewComponent } from './components/schedule-interview/schedule-interview.component';
 import { TimepickerModule } from 'ngx-bootstrap';
 import { AllSchedulesComponent } from './components/all-schedules/all-schedules.component';
-
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [AddCandidateComponent, LandingComponent, DashboardComponent, ApplicationsComponent, ScheduleInterviewComponent,
@@ -36,6 +36,7 @@ import { AllSchedulesComponent } from './components/all-schedules/all-schedules.
     MatDatepickerModule,
     MatSelectModule,
     TimepickerModule.forRoot(),
+    ChartsModule,
     SharedModule
   ],
   entryComponents:[AddCandidateComponent, ScheduleInterviewComponent]
