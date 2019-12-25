@@ -10,6 +10,7 @@ import { ToastrModule } from 'ngx-toastr';
     CommonModule,
     ToastrModule.forRoot()
 
-  ]
+  ],
+  exports: [ToastrModule]
 })
 export class CoreModule { }

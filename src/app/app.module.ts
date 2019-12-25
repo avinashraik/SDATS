@@ -13,6 +13,7 @@ import { AngularFireAuthModule,} from '@angular/fire/auth';
 import { AngularFireAuthGuardModule,} from '@angular/fire/auth-guard';
 import { environment } from 'src/environments/environment';
 import { AuthModule } from './auth/auth.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -30,9 +31,10 @@ import { AuthModule } from './auth/auth.module';
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
-    AuthModule
-    
-    
+    AuthModule, 
+    CoreModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]
