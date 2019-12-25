@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploadService } from 'src/app/shared/components/services/file-upload.service';
 import { Upload } from 'src/app/shared/models/file-upload';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-add-candidate',
@@ -9,7 +10,7 @@ import { Upload } from 'src/app/shared/models/file-upload';
 })
 export class AddCandidateComponent implements OnInit {
 
-  constructor(private ups: FileUploadService) { }
+  constructor(private ups: FileUploadService, private authservice: AuthService) { }
   selectedFiles: FileList;
   currentUpload: Upload;
   ngOnInit() {
@@ -22,5 +23,8 @@ export class AddCandidateComponent implements OnInit {
     let file = this.selectedFiles.item(0)
     this.currentUpload = new Upload(file);
     this.ups.pushUpload(this.currentUpload)
+  }
+  logout(){
+    this.authservice.logout();
   }
 }

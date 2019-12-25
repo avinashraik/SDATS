@@ -33,7 +33,7 @@
     </div>
 </div>
 <!-- Page Wrapper -->
-<div id="wrapper">
+<div id="wrapper" *ngIf="!isLoginUrl">
 
   <app-side-bar></app-side-bar>
 
@@ -65,3 +65,4 @@
   <!-- End of Content Wrapper -->
 
 </div>
+<app-login *ngIf="isLoginUrl"></app-login>
