@@ -9,7 +9,10 @@ import { RouterModule } from '@angular/router';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireStorageModule} from '@angular/fire/storage';
+import { AngularFireAuthModule,} from '@angular/fire/auth';
+import { AngularFireAuthGuardModule,} from '@angular/fire/auth-guard';
 import { environment } from 'src/environments/environment';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { environment } from 'src/environments/environment';
     RouterModule.forRoot([]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    AngularFireAuthModule,
+    AngularFireAuthGuardModule,
+    AuthModule
     
     
   ],
