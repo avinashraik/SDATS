@@ -8,10 +8,12 @@ import { InterviewersComponent } from './components/interviewers/interviewers.co
 import { PlatformComponent } from './components/platform/platform.component';
 import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
+import { LandingComponent } from './components/landing/landing.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
-  declarations: [ConfigurationComponent, InterviewersComponent, PlatformComponent],
+  declarations: [ConfigurationComponent, InterviewersComponent, PlatformComponent, LandingComponent],
   imports: [
     CommonModule,
     MasterRoutingModule,
@@ -22,7 +24,8 @@ import { CoreModule } from '../core/core.module';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    CoreModule
+    CoreModule,
+    SharedModule
   ]
 })
 export class MasterModule { }
